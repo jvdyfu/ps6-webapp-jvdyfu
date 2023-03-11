@@ -1,0 +1,13 @@
+name: webapp
+title:
+username:
+account: jvdyfu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8538667
+bundleId: 6944209
+url: https://jvdyfu.shinyapps.io/webapp/
+when: 1678503907.07329
+lastSyncTime: 1678503907.07331
+asMultiple: FALSE
+asStatic: FALSE
