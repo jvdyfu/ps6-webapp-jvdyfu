@@ -10,9 +10,6 @@
 library(shiny)
 library(tidyverse)
 
-setwd("~/INFO\ 201/PS/ps6-webapp-jvdyfu/webapp")
-getwd()
-
 useOfForce <- read_delim("Use_Of_Force.csv")
 
 ui <- fluidPage(
@@ -38,7 +35,9 @@ ui <- fluidPage(
                        h5("Level 1 - Restraint/Transitory Pain"),
                        h5("Level 2 - Bodily Harm"),
                        h5("Level 3 - Bodily Risk"),
-                       h5("Level 3 - Officer Involved Shooting (OIS)")
+                       h5("Level 3 - Officer Involved Shooting (OIS)"),
+                       h4("This dataset contains", nrow(useOfForce), "documented use of force incidents
+                          from the police in the City of Seattle."),
           
                       ),
 
@@ -63,7 +62,9 @@ ui <- fluidPage(
                              choices = c("Red", "Orange", "Yellow",
                                          "Green", "Blue", "Purple"),
                              selected = "Red")),
-               mainPanel(plotOutput("racePlot")),
+               mainPanel(plotOutput("racePlot"),
+                         textOutput("color"),
+                         textOutput("highestCountRace")),
              )
     ),
     
@@ -81,7 +82,9 @@ ui <- fluidPage(
                                           "Level 3 - Use of Force", "Level 3 - OIS"),
                               selected = "Level 1 - Use of Force"),
                 ),
-               mainPanel(tableOutput("genderTable")),
+               mainPanel(tableOutput("genderTable"), 
+                         textOutput("highestCountGender"),
+                         textOutput("lowestCountGender")),
              )
     )
     
@@ -94,6 +97,7 @@ server <- function(input, output) {
     useOfForce %>%
       filter(Subject_Race %in% input$raceInput)
   })
+  
   
   barColor <- reactive({
     switch(input$colorInput,
@@ -117,8 +121,40 @@ server <- function(input, output) {
     useOfForce %>% 
       filter(Incident_Type == input$forceInput) %>% 
       group_by(Subject_Gender, Incident_Type) %>% 
-      summarize(count = n()) 
+      summarize(Number_Of_Cases = n()) 
   })
+  
+  
+  output$color <- renderText({
+    paste("The selected color is: ", input$colorInput, ".", sep = "")
+  })
+  
+  output$highestCountRace <- renderText({
+      paste("Now displaying race: ", input$raceInput, ". \n", sep = "")
+  })
+  
+  output$highestCountGender <- renderText({
+    useOfForce %>% 
+      filter(Incident_Type == input$forceInput) %>% 
+      group_by(Subject_Gender, Incident_Type) %>% 
+      summarize(Number_Of_Cases = n()) %>% 
+      pull(Number_Of_Cases) %>% 
+      max() %>% 
+      paste("The max number of cases within the selected level of use of force is ", ., ".", sep = "")
+      
+  })
+  
+  output$lowestCountGender <- renderText({
+    useOfForce %>% 
+      filter(Incident_Type == input$forceInput) %>% 
+      group_by(Subject_Gender, Incident_Type) %>% 
+      summarize(Number_Of_Cases = n()) %>% 
+      pull(Number_Of_Cases) %>% 
+      min() %>% 
+      paste("The min number of cases within the selected level of use of force is ", ., ".", sep = "")
+    
+  })
+  
 
 }
 
