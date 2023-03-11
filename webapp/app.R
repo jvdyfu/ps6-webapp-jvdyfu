@@ -43,7 +43,7 @@ ui <- fluidPage(
 
                     )
              )),
-    tabPanel("Race Bar Plot",
+    tabPanel("Race Bar Plot Panel",
              fluidRow(column(8, h4("This race bar plot attempts to answer the 
                                                  question of whether or not there is a correlation
                                                  between race and the number of police cases
@@ -71,7 +71,7 @@ ui <- fluidPage(
     tabPanel("Gender Table Panel",
              fluidRow(column(8, h4("This gender table panel attempts to answer the 
                                                  question of whether or not there is a correlation
-                                                 between gnder and the number of police cases
+                                                 between gender and the number of police cases
                                                  where force was used. We also can answer the 
                                                  question of if there's a correlation with the 
                                                  level of force used (incident type)."))),

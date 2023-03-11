@@ -5,9 +5,9 @@ account: jvdyfu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8538667
-bundleId: 6944661
+bundleId: 6944790
 url: https://jvdyfu.shinyapps.io/webapp/
-when: 1678516913.45252
-lastSyncTime: 1678516913.45253
+when: 1678520072.86237
+lastSyncTime: 1678520072.86239
 asMultiple: FALSE
 asStatic: FALSE
